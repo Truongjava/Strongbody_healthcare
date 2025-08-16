@@ -294,7 +294,7 @@ let getAllDoctorsSchedule = () => {
         }
     })
 }
-module.exports = {
+export default {
     createDoctor: createDoctor,
     getInfoDoctors: getInfoDoctors,
     findUserByEmail: findUserByEmail,

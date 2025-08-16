@@ -1,9 +1,6 @@
 {
     "development": {
-        "username": "root",
-        "password": null,
-        "database": "aaa",
-        "host": "localhost",
+        "use_env_variable": true,
         "dialect": "mysql",
         "operatorsAliases": 0,
         "dialectOptions": {
@@ -14,10 +11,12 @@
         "timezone": "+07:00"
     },
     "test": {
+        "use_env_variable": true,
         "dialect": "mysql",
         "operatorsAliases": 0
     },
     "production": {
+        "use_env_variable": true,
         "dialect": "mysql",
         "operatorsAliases": 0,
         "dialectOptions": {
