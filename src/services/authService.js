@@ -46,7 +46,7 @@ let setNewPassword = (email, password) => {
     });
 };
 
-module.exports = {
+export default {
     register: register,
     verifyAccount: verifyAccount,
     resetPassword: resetPassword,

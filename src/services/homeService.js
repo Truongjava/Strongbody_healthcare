@@ -151,7 +151,7 @@ let getDataPageAllSpecializations = ()=>{
 };
 
 
-module.exports = {
+export default {
     getSpecializations: getSpecializations,
     getClinics: getClinics,
     getDoctors: getDoctors,
