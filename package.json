@@ -10,6 +10,10 @@
   "author": "TruongLe",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/register": "^7.28.3",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
@@ -43,10 +47,5 @@
     "sequelize-cli": "^5.5.1",
     "striptags": "^3.1.1",
     "uuid": "^3.3.3"
-  },
-  "Dependencies": {
-    "@babel/core": "^7.28.3",
-    "@babel/node": "^7.28.0",
-    "@babel/preset-env": "^7.28.3"
   }
 }
