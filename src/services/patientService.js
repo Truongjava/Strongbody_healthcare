@@ -159,67 +159,6 @@ let isBookAble = async (doctorId, date, time) => {
     return false;
 };
 
-// let createNewPatient = (data) => {
-//     return new Promise((async (resolve, reject) => {
-//         try {
-
-//             let schedule = await db.Schedule.findOne({
-//                 where: {
-//                     doctorId: data.doctorId,
-//                     date: data.dateBooking,
-//                     time: data.timeBooking
-//                 },
-//             }).then(async (schedule) => {
-//                 if (schedule && schedule.sumBooking < schedule.maxBooking) {
-//                     let patient = await db.Patient.create(data);
-//                     data.patientId = patient.id;
-//                     await db.ExtraInfo.create(data);
-
-//                     //tăng sumBooking
-//                     let sum = +schedule.sumBooking;
-//                     await schedule.update({ sumBooking: sum + 1 });
-
-//                     let doctor = await db.User.findOne({
-//                         where: { id: patient.doctorId },
-//                         attributes: [ 'name', 'avatar' ]
-//                     });
-
-//                     //update logs
-//                     let logs = {
-//                         patientId: patient.id,
-//                         content: "The patient made an appointment from the system ",
-//                         createdAt: Date.now()
-//                     };
-
-//                     await db.SupporterLog.create(logs);
-
-//                     let dataSend = {
-//                         time: patient.timeBooking,
-//                         date: patient.dateBooking,
-//                         doctor: doctor.name
-//                     };
-
-//                     let isEmailSend = await mailer.sendEmailNormal(patient.email, transMailBookingNew.subject, transMailBookingNew.template(dataSend));
-//                     if (!isEmailSend) {
-//                         console.log("An error occurs when sending an email to: " + patient.email);
-//                         console.log(isEmailSend);
-//                     }
-
-//                     resolve(patient);
-//                 } else {
-//                     resolve("Max booking")
-//                 }
-
-//             });
-
-//         } catch (e) {
-//             reject(e);
-//         }
-//     }));
-// };
-
-
-
 let createNewPatient = (data) => {
     return new Promise((async (resolve, reject) => {
         try {
@@ -233,16 +172,8 @@ let createNewPatient = (data) => {
             }).then(async (schedule) => {
                 if (schedule && schedule.sumBooking < schedule.maxBooking) {
                     let patient = await db.Patient.create(data);
-                    
-                    // Chuẩn bị data cho ExtraInfo với validation cho placeId
-                    let extraInfoData = {
-                        patientId: patient.id,
-                        historyBreath: data.historyBreath || '',
-                        placeId: data.placeId === 'none' || !data.placeId ? null : parseInt(data.placeId),
-                        moreInfo: data.moreInfo || ''
-                    };
-                    
-                    await db.ExtraInfo.create(extraInfoData);
+                    data.patientId = patient.id;
+                    await db.ExtraInfo.create(data);
 
                     //tăng sumBooking
                     let sum = +schedule.sumBooking;

@@ -96,7 +96,7 @@ let getInfoDoctorById = async (req, res) => {
 };
 
 let getManageAppointment = async (req, res) => {
-    // let date = "30/03/2020";
+    // let date = "30/03/2025";
     let currentDate = moment().format('DD/MM/YYYY');
     let canActive = false;
     let date = '';

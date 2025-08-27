@@ -35,7 +35,9 @@ let postRegister = async (req, res) => {
             // });
         } catch (err) {
             req.flash("errors", err);
-            res.render('auth/register', { oldData: req.body });
+            res.render('/register', {
+                oldData: req.body
+            });
         }
     } else {
         let errEmail = '', errPassword = '', errPasswordConfirm = '';
