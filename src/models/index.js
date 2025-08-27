@@ -10,51 +10,41 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-        host: process.env.DB_HOST,
-        dialect: 'mysql',
-        operatorsAliases: 0,
-        dialectOptions: {
-            dateStrings: true,
-            typeCast: true,
-            timezone: "+07:00"
-        },
-        timezone: "+07:00",
-        logging: false,
-    });
-
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    dialect: 'mysql',
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      },
+      dateStrings: true,
+      typeCast: true,
+      timezone: "+07:00"
+    },
+    timezone: "+07:00"
+  });
 } else {
-    sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-        host: process.env.DB_HOST,
-        dialect: 'mysql',
-        operatorsAliases: 0,
-        dialectOptions: {
-            dateStrings: true,
-            typeCast: true,
-            timezone: "+07:00",
-        },
-        timezone: "+07:00",
-        logging: false,
-    });
-
-    sequelize.authenticate().then(() => {
-        console.log('Connection to your databse has been established successfully.');
-    }).catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs.readdirSync(__dirname).filter(file => {
+sequelize.authenticate()
+  .then(() => console.log('✅ Connected to database successfully.'))
+  .catch(err => console.error('❌ Unable to connect to the database:', err));
+
+fs.readdirSync(__dirname)
+  .filter(file => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-}).forEach(file => {
+  })
+  .forEach(file => {
     const model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
-});
+  });
 
 Object.keys(db).forEach(modelName => {
-    if (db[modelName].associate) {
-        db[modelName].associate(db);
-    }
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
 });
 
 db.sequelize = sequelize;
