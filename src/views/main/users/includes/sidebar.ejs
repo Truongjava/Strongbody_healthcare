@@ -3,7 +3,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/users">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <img src="/images/users/admin.png" alt="logo" width="25" height="25">
         </div>
         <div class="sidebar-brand-text mx-3">Strongbody</div>
     </a>
@@ -14,10 +14,10 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
         <a class="nav-link" href="/users">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <img src="/images/users/admin.png" alt="Dashboard" width="20" height="20" class="mr-2">
+            <span>Dashboard</span>
+        </a>
     </li>
-
 
     <hr class="sidebar-divider">
 
@@ -28,9 +28,8 @@
         </div>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#featureManage"
-               aria-expanded="true"
-               aria-controls="collapseTwo">
-                <i class="fas fa-users-cog"></i>
+               aria-expanded="true" aria-controls="collapseTwo">
+                <img src="/images/users/admin.png" alt="Users" width="20" height="20" class="mr-2">
                 <span>Users</span>
             </a>
             <div id="featureManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -44,7 +43,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i>
+                <img src="/images/users/admin.png" alt="Others" width="20" height="20" class="mr-2">
                 <span>Others</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -69,20 +68,23 @@
         </div>
         <li class="nav-item " id="listAppointment">
             <a class="nav-link" href="/doctor/manage/appointment">
-                <i class="fas fa-calendar-check"></i>
-                <span>Appointment schedule</span></a>
+                <img src="/images/users/admin.png" alt="Appointment" width="20" height="20" class="mr-2">
+                <span>Appointment schedule</span>
+            </a>
         </li>
 
         <li class="nav-item liScheduleClass" id="liSchedule">
             <a class="nav-link" href="/doctor/manage/schedule">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Plan</span></a>
+                <img src="/images/users/admin.png" alt="Plan" width="20" height="20" class="mr-2">
+                <span>Plan</span>
+            </a>
         </li>
 
         <li class="nav-item" id="listChart">
             <a class="nav-link" href="/doctor/manage/chart">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Statistical</span></a>
+                <img src="/images/users/admin.png" alt="Statistical" width="20" height="20" class="mr-2">
+                <span>Statistical</span>
+            </a>
         </li>
         <!-- Doctors -->
 
@@ -94,18 +96,21 @@
         </div>
         <li class="nav-item supporter-list-patients" id="liSchedule">
             <a class="nav-link" href="/supporter/get-new-patients">
-                <i class="fas fa-procedures"></i>
-                <span>New patients</span></a>
+                <img src="/images/users/admin.png" alt="New patients" width="20" height="20" class="mr-2">
+                <span>New patients</span>
+            </a>
         </li>
         <li class="nav-item supporter-list-posts">
             <a class="nav-link supporter-manage-posts" href="/supporter/manage/posts">
-                <i class="fas fa-newspaper"></i>
-                <span>Posts</span></a>
+                <img src="/images/users/admin.png" alt="Posts" width="20" height="20" class="mr-2">
+                <span>Posts</span>
+            </a>
         </li>
         <li class="nav-item supporter-list-customers">
             <a class="nav-link" href="/supporter/manage/customers">
-                <i class="fas fa-user-shield"></i>
-                <span>Customer care</span></a>
+                <img src="/images/users/admin.png" alt="Customer care" width="20" height="20" class="mr-2">
+                <span>Customer care</span>
+            </a>
         </li>
         <!-- Supporter -->
 
@@ -113,28 +118,29 @@
 
     <% if(user.roleId === 2 ) { %>
         <!-- Doctors -->
-
         <div class="sidebar-heading">
            Doctors
         </div>
         <li class="nav-item " id="listAppointment">
             <a class="nav-link" href="/doctor/manage/appointment">
-                <i class="fas fa-calendar-check"></i>
-                <span>Appointment schedule</span></a>
+                <img src="/images/users/admin.png" alt="Appointment" width="20" height="20" class="mr-2">
+                <span>Appointment schedule</span>
+            </a>
         </li>
         <li class="nav-item liScheduleClass" id="liSchedule">
             <a class="nav-link" href="/doctor/manage/schedule">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Plant</span></a>
+                <img src="/images/users/admin.png" alt="Plan" width="20" height="20" class="mr-2">
+                <span>Plan</span>
+            </a>
         </li>
 
         <li class="nav-item"  id="listChart">
             <a class="nav-link" href="/doctor/manage/chart">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Statistical</span></a>
+                <img src="/images/users/admin.png" alt="Statistical" width="20" height="20" class="mr-2">
+                <span>Statistical</span>
+            </a>
         </li>
         <!-- Doctors -->
-
     <% } %>
 
     <% if(user.roleId === 3 ) { %>
@@ -144,24 +150,27 @@
         </div>
         <li class="nav-item supporter-list-patients" id="liSchedule">
             <a class="nav-link" href="/supporter/get-new-patients">
-                <i class="fas fa-procedures"></i>
-                <span>New patients</span></a>
+                <img src="/images/users/admin.png" alt="New patients" width="20" height="20" class="mr-2">
+                <span>New patients</span>
+            </a>
         </li>
         <li class="nav-item supporter-list-posts">
             <a class="nav-link supporter-manage-posts" href="/supporter/manage/posts">
-                <i class="fas fa-newspaper"></i>
-                <span>Posts</span></a>
+                <img src="/images/users/admin.png" alt="Posts" width="20" height="20" class="mr-2">
+                <span>Posts</span>
+            </a>
         </li>
         <li class="nav-item supporter-list-customers">
             <a class="nav-link" href="/supporter/manage/customers">
-                <i class="fas fa-user-shield"></i>
-                <span>Customer care</span></a>
+                <img src="/images/users/admin.png" alt="Customer care" width="20" height="20" class="mr-2">
+                <span>Customer care</span>
+            </a>
         </li>
         <!-- Supporter -->
-
     <% } %>
 
     <hr class="sidebar-divider d-none d-md-block">
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
