@@ -425,6 +425,62 @@ let removeAccents = (str) => {
 //     });
 // };
 
+// let sendFormsForPatient = (id, files) => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
+//             let patient = await patientService.getDetailPatient(id);
+//             let doctor = await db.User.findOne({
+//                 where: { id: patient.doctorId },
+//                 attributes: [ 'name', 'avatar' ]
+//             });
+//             let attachments = files.map(file => ({
+//                 filename: file.originalname,
+//                 path: file.path
+//             }));
+
+//             let data = { doctor: doctor.name };
+
+//             await mailer.sendEmailWithAttachment(
+//                 patient.email,
+//                 transMailRemedy.subject,
+//                 transMailRemedy.template(data),
+//                 null, 
+//                 null, 
+//                 attachments
+//             );
+
+
+//             await patient.update({
+//                 isSentForms: true
+//             });
+
+//             if (patient.ExtraInfo) {
+//                 let image = JSON.parse(patient.ExtraInfo.sendForms);
+//                 let count = 0;
+//                 if (image) {
+//                     count = Object.keys(image).length;
+//                 } else {
+//                     image = {};
+//                 }
+
+//                 files.forEach((x, index) => {
+//                     image[count + index] = x.filename;
+//                 });
+//                 await patient.ExtraInfo.update({
+//                     sendForms: JSON.stringify(image)
+//                 });
+//             }
+
+//             resolve(patient);
+//         } catch (e) {
+//             reject(e);
+//         }
+//     });
+// };
+
+
+const fs = require("fs");
+
 let sendFormsForPatient = (id, files) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -433,9 +489,11 @@ let sendFormsForPatient = (id, files) => {
                 where: { id: patient.doctorId },
                 attributes: [ 'name', 'avatar' ]
             });
+
+            // Đọc file từ server rồi attach đúng cách
             let attachments = files.map(file => ({
                 filename: file.originalname,
-                path: file.path
+                content: fs.createReadStream(file.path) // dùng stream để gửi file
             }));
 
             let data = { doctor: doctor.name };
@@ -449,7 +507,7 @@ let sendFormsForPatient = (id, files) => {
                 attachments
             );
 
-
+            // cập nhật trạng thái đã gửi
             await patient.update({
                 isSentForms: true
             });
@@ -464,8 +522,9 @@ let sendFormsForPatient = (id, files) => {
                 }
 
                 files.forEach((x, index) => {
-                    image[count + index] = x.filename;
+                    image[count + index] = x.originalname;
                 });
+
                 await patient.ExtraInfo.update({
                     sendForms: JSON.stringify(image)
                 });
@@ -477,6 +536,7 @@ let sendFormsForPatient = (id, files) => {
         }
     });
 };
+
 
 
 let getDoctorForFeedbackPage = (id) => {
