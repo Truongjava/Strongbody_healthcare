@@ -78,81 +78,178 @@ function getScheduleDoctorByDate() {
     });
 }
 
+// function specializationGetScheduleDoctorByDate() {
+//     $('.doctor-schedule-spe').unbind('change').bind('change', function(event) {
+//         let value = $(this).val();
+//         let arrSplit = value.split("-");
+//         let date = arrSplit[1].trim();
+//         let doctorId = $(this).data('doctor');
+
+//         $.ajax({
+//             method: "POST",
+//             url: `${window.location.origin}/doctor/get-schedule-doctor-by-date`,
+//             data: { date: date, doctorId: doctorId },
+//             success: function(data) {
+//                 //empty content inside div parent
+//                 $(`#div-schedule-${doctorId}`).html('');
+//                 $(`#div-more-info-${doctorId}`).html('');
+//                 let html = '';
+//                 let moreInfo = '';
+//                 if (data.message.length > 0) {
+//                     data.message.forEach((schedule, index) => {
+//                         if (schedule.isDisable === false) {
+//                             html += `
+//                           <div id="spe-btn-modal-${schedule.id}" data-doctor-id="${schedule.doctorId}" data-date="${schedule.date}"
+//                                  data-time="${schedule.time}"
+//                                  class="text-decoration-none show-modal-at-clinic-page">
+//                                 <div class="doctor-time">
+//                                     ${schedule.time}
+//                                 </div>
+//                             </div>
+//                         `;
+//                         }
+
+//                         if (index === data.message.length - 1 && schedule.isDisable === true) {
+//                             html += `<div>
+//                                    There are no scheduled visits in the current timeframe. Please select the next scheduled exams.
+//                             </div>`
+//                         }
+
+
+//                     });
+//                     moreInfo = `
+//                         <div class="d-flex flex-column">
+//                                             <div>
+//                                                 <span class="d-block mt-2"> Choose <i class="fa fa-hand-o-up" aria-hidden="true"></i>  and book a free consultation</span>
+//                                             </div>
+//                                             <div style="border-top: 1px solid #ccc" class="d-flex flex-column">
+//                                                 <span class="d-block pt-3 pb-1" style="text-transform: uppercase">Address:</span>
+//                                                 <span class="d-block pb-1" style="border-bottom: 1px solid #ccc">${data.doctor.address}</span>
+//                                             </div>
+//                                             <span class="d-block pt-2">Price: 50 USD</span>
+//                          </div>
+//                     `;
+//                 } else {
+//                     html = `
+//                             <div class="no-schedule">
+                               
+//                                  Doctor "${data.doctor.name}" does not have an appointment on <b>${value}</b>. Please select the next examination schedule.
+
+//                             </div>
+//                     `;
+//                     moreInfo = '';
+//                 }
+
+//                 $(`#div-schedule-${doctorId}`).append(html);
+//                 if (moreInfo !== '') {
+//                     $(`#div-more-info-${doctorId}`).append(moreInfo);
+//                 }
+
+//             },
+//             error: function(error) {
+//                 alertify.error('An error occurs, please try again later!!');
+//                 console.log(error)
+//             }
+//         });
+//     });
+// }
+
+
 function specializationGetScheduleDoctorByDate() {
-    $('.doctor-schedule-spe').unbind('change').bind('change', function(event) {
+    $('.doctor-schedule-spe').unbind('change').bind('change', function (event) {
         let value = $(this).val();
+        if (!value || value.indexOf('-') === -1) {
+            alertify.error("Invalid schedule format selected!");
+            return;
+        }
+
         let arrSplit = value.split("-");
-        let date = arrSplit[1].trim();
+        let date = arrSplit[1] ? arrSplit[1].trim() : null;
         let doctorId = $(this).data('doctor');
+
+        if (!doctorId || !date) {
+            alertify.error("Missing doctor or date information!");
+            return;
+        }
 
         $.ajax({
             method: "POST",
             url: `${window.location.origin}/doctor/get-schedule-doctor-by-date`,
             data: { date: date, doctorId: doctorId },
-            success: function(data) {
-                //empty content inside div parent
+            success: function (data) {
+                // clear nội dung cũ
                 $(`#div-schedule-${doctorId}`).html('');
                 $(`#div-more-info-${doctorId}`).html('');
                 let html = '';
                 let moreInfo = '';
-                if (data.message.length > 0) {
+
+                if (data && Array.isArray(data.message) && data.message.length > 0) {
                     data.message.forEach((schedule, index) => {
                         if (schedule.isDisable === false) {
                             html += `
-                          <div id="spe-btn-modal-${schedule.id}" data-doctor-id="${schedule.doctorId}" data-date="${schedule.date}"
-                                 data-time="${schedule.time}"
-                                 class="text-decoration-none show-modal-at-clinic-page">
-                                <div class="doctor-time">
-                                    ${schedule.time}
+                                <div id="spe-btn-modal-${schedule.id}" 
+                                     data-doctor-id="${schedule.doctorId}" 
+                                     data-date="${schedule.date}"
+                                     data-time="${schedule.time}"
+                                     class="text-decoration-none show-modal-at-clinic-page">
+                                    <div class="doctor-time">
+                                        ${schedule.time}
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
                         }
 
                         if (index === data.message.length - 1 && schedule.isDisable === true) {
-                            html += `<div>
-                                   There are no scheduled visits in the current timeframe. Please select the next scheduled exams.
-                            </div>`
+                            html += `
+                                <div>
+                                   There are no scheduled visits in the current timeframe. 
+                                   Please select the next scheduled exams.
+                                </div>`;
                         }
-
-
                     });
+
                     moreInfo = `
                         <div class="d-flex flex-column">
-                                            <div>
-                                                <span class="d-block mt-2"> Choose <i class="fa fa-hand-o-up" aria-hidden="true"></i>  and book a free consultation</span>
-                                            </div>
-                                            <div style="border-top: 1px solid #ccc" class="d-flex flex-column">
-                                                <span class="d-block pt-3 pb-1" style="text-transform: uppercase">Address:</span>
-                                                <span class="d-block pb-1" style="border-bottom: 1px solid #ccc">${data.doctor.address}</span>
-                                            </div>
-                                            <span class="d-block pt-2">Price: 50 USD</span>
-                         </div>
+                            <div>
+                                <span class="d-block mt-2">
+                                    Choose <i class="fa fa-hand-o-up" aria-hidden="true"></i> 
+                                    and book a free consultation
+                                </span>
+                            </div>
+                            <div style="border-top: 1px solid #ccc" class="d-flex flex-column">
+                                <span class="d-block pt-3 pb-1" style="text-transform: uppercase">Address:</span>
+                                <span class="d-block pb-1" style="border-bottom: 1px solid #ccc">
+                                    ${data.doctor?.address || "No address"}
+                                </span>
+                            </div>
+                            <span class="d-block pt-2">Price: 50 USD</span>
+                        </div>
                     `;
                 } else {
                     html = `
-                            <div class="no-schedule">
-                               
-                                 Doctor "${data.doctor.name}" does not have an appointment on <b>${value}</b>. Please select the next examination schedule.
-
-                            </div>
+                        <div class="no-schedule">
+                            Doctor "${data?.doctor?.name || 'Unknown'}" 
+                            does not have an appointment on <b>${value}</b>. 
+                            Please select the next examination schedule.
+                        </div>
                     `;
-                    moreInfo = '';
                 }
 
                 $(`#div-schedule-${doctorId}`).append(html);
                 if (moreInfo !== '') {
                     $(`#div-more-info-${doctorId}`).append(moreInfo);
                 }
-
             },
-            error: function(error) {
+            error: function (error) {
                 alertify.error('An error occurs, please try again later!!');
-                console.log(error)
+                console.error("AJAX error: ", error);
             }
         });
     });
 }
+
+
+
 
 function showModalAllSpecializations() {
     $('.show-all-specializations').on('click', function(e) {
